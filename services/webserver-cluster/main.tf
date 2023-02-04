@@ -57,8 +57,8 @@ resource "aws_security_group" "instance" {
 	ingress {
 		from_port = var.server_port
 		to_port = var.server_port
-		protocol = "tcp"
-		cidr_blocks = ["0.0.0.0/0"]
+		protocol = local.tcp_protocol 
+		cidr_blocks = local.all_ips
 	}
 }
 
@@ -118,7 +118,7 @@ resource "aws_lb_listener" "http" {
 
 		fixed_response {
 				content_type = "text/plain"
-				message_body = "404: page not found"
+				message_body = "404: oops!"
 				status_code  = 404
 		}
 	}
