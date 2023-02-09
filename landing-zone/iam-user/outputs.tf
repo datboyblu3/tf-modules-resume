@@ -4,6 +4,6 @@ output "all_users" {
 }
 
 output "all_arns" {
-  value = values(aws_iam_user.example)[*].arn
+  value = values(aws_iam_user.example)[*].user_arn
 
 }
