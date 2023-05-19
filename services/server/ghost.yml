@@ -1,0 +1,36 @@
+version: '3'
+services:
+  ghost:
+    image: ghost:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      url: https://blog.r0land.link
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: Wisplike-Rummage-Wriggle9-Exorcism-Exert
+      database__connection__database: ghost
+    volumes:
+      - /opt/ghost_content:/var/lib/ghost/content
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Wisplike-Rummage-Wriggle9-Exorcism-Exert
+    volumes:
+      - /opt/ghost_mysql:/var/lib/mysql
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    depends_on:
+      - ghost
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt/:/etc/letsencrypt/
+      - /opt/ghost_nginx:/etc/nginx/conf.d/
