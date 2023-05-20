@@ -35,6 +35,7 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 
 
 resource "aws_s3_bucket_policy" "site" {
+  depends_on = [ aws_s3_bucket.site, aws_s3_bucket_public_access_block.public_access ]
   bucket = aws_s3_bucket.site.id
 
   policy = jsonencode({
