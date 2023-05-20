@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "dist" {
   depends_on = [aws_s3_bucket.site, aws_acm_certificate_validation.validate]
 
   origin {
-    domain_name = aws_s3_bucket.site.website_endpoint
+    domain_name = var.site_domain
     origin_id   = "S3-${var.site_domain}"
   }
 
@@ -44,7 +44,11 @@ resource "aws_cloudfront_distribution" "dist" {
     default_ttl            = 3600
     max_ttl                = 86400
   }
-
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate_validation.validate.certificate_arn
     ssl_support_method  = "sni-only"
