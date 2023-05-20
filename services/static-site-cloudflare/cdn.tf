@@ -11,7 +11,7 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_acm_certificate_validation" "validate" {
   depends_on      = [aws_acm_certificate.cert]
   certificate_arn = aws_acm_certificate.cert.arn
-  validation_record_fqdns = cloudflare_record.cname[0].hostname
+  validation_record_fqdns = cloudflare_record.cname.hostname
 }
 
 resource "aws_cloudfront_distribution" "dist" {
