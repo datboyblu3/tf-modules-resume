@@ -12,6 +12,6 @@ resource "cloudflare_record" "cname" {
   type       = "CNAME"
 
   ttl     = 1
-  proxied = true
+  proxied = false
 }
 
