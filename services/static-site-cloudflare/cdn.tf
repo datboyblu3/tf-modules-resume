@@ -1,8 +1,6 @@
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.site_domain
   validation_method = "DNS"
-  create_route53_records  = false
-  
   tags              = var.resource_tags
 
   lifecycle {
