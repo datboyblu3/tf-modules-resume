@@ -8,7 +8,7 @@ resource "cloudflare_record" "cname" {
   # depends_on = [aws_cloudfront_distribution.dist]
   zone_id    = data.cloudflare_zones.domain.zones[0].id
   name       = var.site_domain
-  value      = aws_cloudfront_distribution.dist.domain_name
+  value      = var.site_domain
   type       = "CNAME"
 
   ttl     = 1
