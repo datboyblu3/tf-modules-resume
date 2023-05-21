@@ -11,6 +11,9 @@ resource "cloudflare_record" "root" {
 
     }
   }
+  name    = each.value.name
+  type    = each.value.type
+  value   = each.value.value
   zone_id = data.cloudflare_zone.domain.id
   ttl     = 1
 }
