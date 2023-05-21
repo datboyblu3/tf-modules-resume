@@ -4,13 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "name" {
-  type = string
-  description = "name of cloudflare record"
-  default = ""
-}
-
-
 variable "site_domain" {
   type        = string
   description = "The domain name to use for the static site"
