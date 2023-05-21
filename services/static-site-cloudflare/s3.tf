@@ -20,7 +20,7 @@ resource "aws_s3_bucket_website_configuration" "site" {
   }
 
   error_document {
-    key = "error.html"
+    key = "404.html"
   }
 }
 
@@ -35,8 +35,8 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 
 
 resource "aws_s3_bucket_policy" "site" {
-  depends_on = [ aws_s3_bucket.site, aws_s3_bucket_public_access_block.public_access ]
-  bucket = aws_s3_bucket.site.id
+  depends_on = [aws_s3_bucket.site, aws_s3_bucket_public_access_block.public_access]
+  bucket     = aws_s3_bucket.site.id
 
   policy = jsonencode({
     Version = "2012-10-17"
