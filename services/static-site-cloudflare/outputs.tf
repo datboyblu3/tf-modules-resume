@@ -9,6 +9,8 @@ output "domain_name" {
   value       = aws_s3_bucket_website_configuration.site.website_endpoint
 }
 
+
+
 output "acm_certificate_domain_validation_options" {
   description = "A list of attributes to feed into other resources to complete certificate validation. Can have more than one element, e.g. if SANs are defined. Only set if DNS-validation was used."
   value       = flatten(aws_acm_certificate.cert.domain_validation_options)

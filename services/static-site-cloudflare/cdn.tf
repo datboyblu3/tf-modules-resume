@@ -9,8 +9,8 @@ resource "aws_acm_certificate" "cert" {
 }
 
 resource "aws_acm_certificate_validation" "validate" {
-  certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [cloudflare_record.root.hostname, "_90c0f03da8ed46cdbdce886df4635aea.r0land-sec.com"]
+  depends_on      = [aws_acm_certificate.certa]
+  certificate_arn = aws_acm_certificate.cert.arn
 }
 
 resource "aws_cloudfront_origin_access_identity" "site" {
