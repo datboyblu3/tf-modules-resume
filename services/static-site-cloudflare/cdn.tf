@@ -23,7 +23,7 @@ resource "aws_cloudfront_distribution" "dist" {
   comment    = "static site"
 
   origin {
-    domain_name = aws_s3_bucket_website_configuration.site.website_domain
+    domain_name = aws_s3_bucket.site.website_endpoint
     origin_id   = "S3-${aws_s3_bucket.site.id}"
 
     s3_origin_config {
