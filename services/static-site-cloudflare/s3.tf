@@ -26,6 +26,7 @@ resource "aws_s3_bucket_website_configuration" "site" {
 
 
 resource "aws_s3_bucket_public_access_block" "public_access" {
+  depends_on              = [aws_s3_bucket.site, aws_s3_bucket_website_configuration.site]
   bucket                  = aws_s3_bucket.site.id
   block_public_acls       = false
   block_public_policy     = false
