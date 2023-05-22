@@ -13,9 +13,9 @@ resource "aws_acm_certificate_validation" "validate" {
   certificate_arn = aws_acm_certificate.cert.arn
 }
 
-#resource "aws_cloudfront_origin_access_identity" "site" {
-# comment = "access-identity-${aws_s3_bucket.site.bucket_domain_name}"
-#}
+resource "aws_cloudfront_origin_access_identity" "site" {
+  comment = "access-identity-${aws_s3_bucket.site.bucket_domain_name}"
+}
 
 
 resource "aws_cloudfront_distribution" "dist" {
