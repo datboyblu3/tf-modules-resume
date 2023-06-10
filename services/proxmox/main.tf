@@ -56,7 +56,7 @@ resource "proxmox_vm_qemu" "cloudinit" {
       type = "ssh"
       user = var.ci_username
       # password = var.ci_password
-      private_key = file("/data/.ssh/homeadm")
+      private_key = file("./ssh/homeadm")
       host        = each.value.ip
     }
   }
