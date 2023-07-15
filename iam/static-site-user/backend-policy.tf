@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "dynamodb-remote" {
     ]
 
     resources = [
-      "arn:aws:dynamodb:${var.region}:${data.aws_caller_identity.current.account_id}:table/${var.table}"
+      "arn:aws:dynamodb:${var.region}:${data.aws_caller_identity.current.account_id}:table/${var.dynamodb_table_name}"
     ]
   }
 }

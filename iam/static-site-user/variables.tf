@@ -39,3 +39,9 @@ variable "bucket" {
   type        = string
   default     = ""
 }
+
+variable "dynamodb_table_name" {
+  description = "name of dynamodb"
+  type = string
+  default = ""
+}
