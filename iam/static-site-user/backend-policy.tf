@@ -14,7 +14,7 @@ resource "aws_iam_group_policy" "policy-tf-state-s3" {
 }
 
 data "aws_iam_user" "user" {
- user_name = var.user
+  user_name = var.user
 }
 
 data "aws_iam_policy_document" "s3-backend" {
@@ -23,8 +23,8 @@ data "aws_iam_policy_document" "s3-backend" {
     principals {
       type = "AWS"
       identifiers = [
-      "${data.aws_caller_identity.current.arn}",
-      "${data.aws_iam_user.user.arn}"
+        "${data.aws_caller_identity.current.arn}",
+        "${data.aws_iam_user.user.arn}"
       ]
     }
     actions = [
@@ -35,8 +35,8 @@ data "aws_iam_policy_document" "s3-backend" {
     ]
 
     resources = [
-      "arn:aws::s3:::${var.bucket}",
-      "arn:aws::s3:::${var.bucket}/*",
+      "arn:aws:s3:::${var.bucket}",
+      "arn:aws:s3:::${var.bucket}/*",
     ]
   }
 }

@@ -53,8 +53,8 @@ data "aws_iam_policy_document" "s3-backend" {
     ]
 
     resources = [
-      "arn:aws::s3:::${var.bucket}",
-      "arn:aws::s3:::${var.bucket}/*",
+      "arn:aws:s3:::${var.bucket}",
+      "arn:aws:s3:::${var.bucket}/*",
     ]
   }
 }
