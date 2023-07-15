@@ -40,10 +40,4 @@ variable "dynamodb_table_name" {
   default     = "tf-locks"
 }
 
-variable "destroy" {
-  description = "Whether to prevent s3 bucket deletion"
-  type        = bool
-  default     = false
-}
-
 
