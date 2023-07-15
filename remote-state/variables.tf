@@ -40,4 +40,9 @@ variable "dynamodb_table_name" {
   default     = "tf-locks"
 }
 
+variable "user" {
+  description = "IAM user name for remote state module"
+  type = string
+  default = ""
+}
 
