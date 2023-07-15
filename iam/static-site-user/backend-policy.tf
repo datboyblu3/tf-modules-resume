@@ -13,10 +13,6 @@ resource "aws_iam_group_policy" "policy-tf-state-s3" {
   policy = data.aws_iam_policy_document.s3-backend.json
 }
 
-data "aws_iam_user" "user" {
-  user_name = var.user
-}
-
 data "aws_iam_policy_document" "s3-backend" {
   statement {
     sid = "1"
