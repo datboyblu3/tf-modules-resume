@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "s3-backend" {
       type = "AWS"
       identifiers = [
         "${data.aws_caller_identity.current.arn}",
-        "${data.aws_caller_identity.current.account_id}:user/${var.env}/${var.app}/${var.user}"
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${var.env}/${var.app}/${var.user}"
       ]
     }
     actions = [
