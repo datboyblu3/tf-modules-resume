@@ -13,13 +13,19 @@ resource "aws_iam_group_policy" "policy-tf-state-s3" {
   policy = data.aws_iam_policy_document.s3-backend.json
 }
 
+data "aws_iam_user" "user" {
+ user_name = var.user
+}
+
 data "aws_iam_policy_document" "s3-backend" {
   statement {
     sid = "1"
     principals {
       type = "AWS"
-      identifiers = ["${data.aws_caller_identity.current.arn}",
-      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${var.app}/${var.env}/${var.user}"]
+      identifiers = [
+      "${data.aws_caller_identity.current.arn}",
+      "${data.aws_iam_user.user.arn}"
+      ]
     }
     actions = [
       "s3:GetObject",

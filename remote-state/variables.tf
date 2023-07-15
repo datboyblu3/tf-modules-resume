@@ -1,6 +1,6 @@
 variable "env" {
   description = "code/app environement"
-  type = string
+  type        = string
   validation {
     condition = anytrue([
       var.env == "dev",
@@ -14,10 +14,10 @@ variable "env" {
 
 variable "app" {
   description = "app or project name"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   validation {
-    condition = length(var.app) > 4
+    condition     = length(var.app) > 4
     error_message = "app name must be at least 4 characters"
   }
 }
@@ -42,7 +42,7 @@ variable "dynamodb_table_name" {
 
 variable "user" {
   description = "IAM user name for remote state module"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 

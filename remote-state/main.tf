@@ -32,13 +32,17 @@ resource "aws_s3_bucket_policy" "backend" {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_user" "user" {
+  user_name = var.user
+}
+
 data "aws_iam_policy_document" "s3-backend" {
   statement {
     principals {
       type = "AWS"
       identifiers = [
         "${data.aws_caller_identity.current.arn}",
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${var.app}/${var.env}/${var.user}"
+        "${data.aws_iam_user.user.arn}"
       ]
     }
     actions = [
