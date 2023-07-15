@@ -15,6 +15,7 @@ resource "aws_iam_group_policy" "policy-tf-state-s3" {
 
 data "aws_iam_policy_document" "s3-backend" {
   statement {
+    sid = "1"
     principals {
       type = "AWS"
       identifiers = ["${data.aws_caller_identity.current.arn}",
@@ -24,7 +25,7 @@ data "aws_iam_policy_document" "s3-backend" {
       "s3:GetObject",
       "s3:ListBucket",
       "s3:PutObject",
-      "s3:DeleteObject"
+      "s3:DeleteObject",
     ]
 
     resources = [

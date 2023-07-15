@@ -1,6 +1,6 @@
 resource "aws_iam_user" "user" {
   name = var.user
-  path = "/${var.env}/${var.app}/"
+  path = "/${var.env}/${var.app}/${var.user}"
 
   tags = {
     environment = var.env
