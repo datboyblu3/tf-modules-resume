@@ -25,7 +25,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
 }
 
 resource "aws_s3_bucket_policy" "backend" {
-  bucket = var.bucket
+  bucket = aws_s3_bucket.terraform_state.id
   policy = data.aws_iam_policy_document.s3-backend.json
 }
 
