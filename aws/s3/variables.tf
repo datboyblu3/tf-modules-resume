@@ -51,6 +51,12 @@ variable "is_destroy" {
   default     = "false"
 }
 
+variable "enable_bucket_versioning" {
+  description = "enable bucket versioning"
+  type = bool
+  default = false
+}
+
 
 variable "enable_web" {
   description = "enable bucket website configuration"

@@ -20,10 +20,11 @@ provider "aws" {
 }
 
 module "s3" {
-  region = ""
+  source = "https://github.com/alexrf45/tf-modules-resume//aws/s3"
   env    = ""
   app    = ""
   resource_tags = {Project = "demo", Application = "demo-app", Environment = "dev"}
+  enable_bucket_versioning = false
   type = "bucket"
   is_destroy = true
   enable_web = true
@@ -56,5 +57,5 @@ output "website_endpoint" {
 output "website_domain" {
   description = "aws s3 website domain"
   value = module.s3.website_domain
-
+}
 ```

@@ -15,10 +15,10 @@ output "bucket_region" {
 
 output "website_endpoint" {
   description = "aws s3 website bucket endpoint"
-  value       = aws_s3_bucket_website_configuration.this.website_endpoint
+  value       = concat(aws_s3_bucket_website_configuration.this.*.website_endpoint, [""])[0]
 }
 
 output "website_domain" {
   description = "aws s3 website domain"
-  value       = aws_s3_bucket_website_configuration.this.website_domain
+  value       = concat(aws_s3_bucket_website_configuration.this.*.website_domain, [""])[0]
 }
