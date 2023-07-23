@@ -59,7 +59,7 @@ variable "enable_web" {
 }
 
 variable "public" {
-  description = "enable public access on bucket"
+  description = "disable s3 block public access"
   type        = bool
   default     = true
 }
