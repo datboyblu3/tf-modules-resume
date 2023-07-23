@@ -1,3 +1,8 @@
+#Simple AWS S3 terraform module
+
+I decided to move away from tfvars in an effort to reduce code duplication.
+
+
 ```
 terraform {
   backend "s3" {

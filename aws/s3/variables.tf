@@ -64,8 +64,8 @@ variable "enable_web" {
   default     = false
 }
 
-variable "public" {
-  description = "disable s3 block public access"
+variable "block_public_access" {
+  description = "enable s3 block public access"
   type        = bool
   default     = true
 }
