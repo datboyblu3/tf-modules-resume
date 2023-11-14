@@ -6,7 +6,6 @@ resource "aws_key_pair" "jump_ssh_key" {
 
 #reserves a AWS Elastic IP
 resource "aws_eip" "jump_eip" {
-  domain = "vpc"
 }
 
 #Associates Elastic IP to ec2 instance
