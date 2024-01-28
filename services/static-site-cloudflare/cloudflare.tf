@@ -24,8 +24,6 @@ resource "cloudflare_record" "cname" {
   name    = var.site_domain
   value   = aws_cloudfront_distribution.dist.domain_name
   type    = "CNAME"
-  ttl     = 1
-  proxied = true
 }
 
 
