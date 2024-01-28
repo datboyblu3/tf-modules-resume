@@ -16,7 +16,7 @@ resource "cloudflare_record" "acm" {
 
 
 resource "cloudflare_record" "cname" {
-  #depends_on = [aws_cloudfront_distribution.dist]
+  depends_on = [aws_cloudfront_distribution.dist]
 
   zone_id = data.cloudflare_zones.domains.id
   name    = var.site_domain
@@ -26,25 +26,4 @@ resource "cloudflare_record" "cname" {
   proxied = true
 }
 
-resource "cloudflare_record" "www" {
-  #depends_on = [aws_cloudfront_distribution.dist]
 
-  zone_id = data.cloudflare_zones.domains.id
-  name    = "www"
-  value   = var.site_domain
-  type    = "CNAME"
-  ttl     = 1
-  proxied = true
-}
-
-
-resource "cloudflare_record" "blog" {
-  #depends_on = [aws_cloudfront_distribution.dist]
-
-  zone_id = data.cloudflare_zones.domains.id
-  name    = "blog"
-  value   = var.site_domain
-  type    = "CNAME"
-  ttl     = 1
-  proxied = true
-}
