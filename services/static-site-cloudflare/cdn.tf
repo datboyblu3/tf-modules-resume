@@ -1,7 +1,8 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = var.site_domain
-  validation_method = "DNS"
-  tags              = var.resource_tags
+  domain_name               = var.site_domain
+  subject_alternative_names = ["www.${var.site_domain}", "blog.${var.site_domain}"]
+  validation_method         = "DNS"
+  tags                      = var.resource_tags
 
   lifecycle {
     create_before_destroy = true
