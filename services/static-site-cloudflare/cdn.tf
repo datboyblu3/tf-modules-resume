@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "dist" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  aliases = [aws_acm_certificate.cert.domain_name]
+  aliases = [var.site_domain, "www.${var.site_domain}", "blog.${var.site_domain}"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
