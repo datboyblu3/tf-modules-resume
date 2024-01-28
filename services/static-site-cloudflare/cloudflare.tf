@@ -5,6 +5,7 @@ data "cloudflare_zones" "domains" {
   }
 }
 
+
 resource "cloudflare_record" "acm" {
   depends_on = [aws_acm_certificate.cert]
 
