@@ -22,7 +22,7 @@ resource "cloudflare_record" "cname" {
 
 
 
-  zone_id = data.cloudflare_zones.domains.id
+  zone_id = data.cloudflare_zones.domain.id
   name    = var.site_domain
   value   = aws_cloudfront_distribution.dist.domain_name
   type    = "CNAME"
