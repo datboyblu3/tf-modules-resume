@@ -39,7 +39,7 @@ resource "cloudflare_record" "www" {
 
 
 resource "cloudflare_record" "blog" {
-  depends_on = [aws_cloudfront_distribution.dist]
+  #depends_on = [aws_cloudfront_distribution.dist]
 
   zone_id = data.cloudflare_zones.domains.id
   name    = "blog"
