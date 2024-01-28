@@ -11,6 +11,11 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_acm_certificate_validation" "validate" {
   depends_on      = [aws_acm_certificate.cert]
   certificate_arn = aws_acm_certificate.cert.arn
+
+  timeouts {
+    create = "3m"
+
+  }
 }
 
 resource "aws_cloudfront_origin_access_identity" "site" {
@@ -41,7 +46,7 @@ resource "aws_cloudfront_distribution" "dist" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  aliases = [aws_acm_certificate.cert.domain_name]
+  aliases = [var.site_domain]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]

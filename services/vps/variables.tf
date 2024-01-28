@@ -1,23 +1,11 @@
 variable "resource_tags" {
   description = "Tags to set for all resources"
-  type        = map
+  type        = map(string)
   default = {
-    project     = "Blog"
-    environment = "dev"
-    Name        = "server"
+    project     = "Security Research"
+    environment = "bug_bounty"
+    Name        = "BB"
   }
-}
-
-variable "domain" {
-  description = "domain name from route53 hosted zone"
-  type        = string
-  default     = "r0land.link."
-}
-
-variable "subdomain" {
-  description = "subdomain for server/site"
-  type = string
-
 }
 
 variable "ami" {
@@ -36,14 +24,14 @@ variable "instance_type" {
 variable "volume_size" {
   description = "Size of Volume"
   type        = string
-  default     = "40"
+  default     = "50"
 
 }
 
 variable "volume_type" {
   description = "Type of volume"
   type        = string
-  default     = "gp3"
+  default     = "gp2"
 
 }
 
@@ -54,18 +42,23 @@ variable "associate_public_ip_address" {
 }
 
 
+variable "username" {
+  description = "username for vps instance"
+  type        = string
+  default     = ""
+}
 
 variable "key_name" {
   description = "Name of the associated ec2 key pair"
   type        = string
-  default     = "dev-ssh"
+  default     = "bounty"
 }
 
 
 variable "sg_name" {
   description = "Name of security group"
   type        = string
-  default     = "dev_sg"
+  default     = "bounty_sg"
 }
 
 
