@@ -1,6 +1,3 @@
-# data "cloudflare_zone" "domain" {
-#   name = var.site_domain
-# }
 
 data "cloudflare_zones" "domains" {
   filter {
@@ -19,7 +16,7 @@ resource "cloudflare_record" "acm" {
 
 
 resource "cloudflare_record" "cname" {
-  depends_on = [aws_cloudfront_distribution.dist]
+  #depends_on = [aws_cloudfront_distribution.dist]
 
   zone_id = data.cloudflare_zones.domains.id
   name    = var.site_domain
@@ -30,7 +27,7 @@ resource "cloudflare_record" "cname" {
 }
 
 resource "cloudflare_record" "www" {
-  depends_on = [aws_cloudfront_distribution.dist]
+  #depends_on = [aws_cloudfront_distribution.dist]
 
   zone_id = data.cloudflare_zones.domains.id
   name    = "www"
