@@ -1,8 +1,7 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name               = var.site_domain
-  subject_alternative_names = ["www.${var.site_domain}", "blog.${var.site_domain}"]
-  validation_method         = "DNS"
-  tags                      = var.resource_tags
+  domain_name       = var.site_domain
+  validation_method = "DNS"
+  tags              = var.resource_tags
 
   lifecycle {
     create_before_destroy = true
@@ -12,6 +11,11 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_acm_certificate_validation" "validate" {
   depends_on      = [aws_acm_certificate.cert]
   certificate_arn = aws_acm_certificate.cert.arn
+
+  timeouts {
+    create = "3m"
+
+  }
 }
 
 resource "aws_cloudfront_origin_access_identity" "site" {
