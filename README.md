@@ -2,6 +2,7 @@
 
 This is my personal repo for hand built Terraform modules. Feel free to fork or clone!
 
+**NOTE: These are WIP and are very rigid. They need refinement**
 
 # AWS provider example w/ default tags:
 
