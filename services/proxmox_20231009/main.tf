@@ -19,17 +19,22 @@ resource "proxmox_vm_qemu" "cloudinit" {
   target_node = each.value.target_node
   #vm stats
   cpu      = var.host
+  bios     = "ovmf"
   scsihw   = var.scsihw
   bootdisk = var.bootdisk
   cores    = each.value.vcpu
   sockets  = var.socket
   memory   = each.value.memory
-  disk {
-    slot     = 0
-    size     = each.value.disk_size
-    type     = var.disk_type
-    storage  = var.disk_storage_location
-    iothread = 0
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          backup  = true
+          storage = var.disk_storage_location
+          size    = each.value.disk_size
+        }
+      }
+    }
   }
 
 
@@ -47,23 +52,12 @@ resource "proxmox_vm_qemu" "cloudinit" {
   #cloud init image name, generated during manual clone
   os_type = var.os_type
   #networking
-  ipconfig0 = "ip=${each.value.ip}/24,gw=${each.value.gw}"
+  nameserver = "1.1.1.1"
+  ipconfig0  = "ip=${each.value.ip}/24,gw=${each.value.gw}"
   # sshkeys set using variables. the variable contains the text of the key.
   ssh_user = var.ci_username
   sshkeys  = trimspace(tls_private_key.ssh-ed25519.public_key_openssh)
 
 
-  # executes a post install of docker and other instance tasks. 
-  # TODO: Kubernetes install
-  # provisioner "remote-exec" {
-  # inline = concat(var.vm_docker)
-  # connection {
-  #   type = "ssh"
-  #   user = var.ci_username
-  #   # password = var.ci_password
-  #   private_key = trimspace(tls_private_key.ssh-ed25519.private_key_openssh)
-  #   host        = each.value.ip
-  # }
-  #}
 }
 
