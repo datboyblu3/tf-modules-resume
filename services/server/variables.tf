@@ -11,20 +11,32 @@ variable "resource_tags" {
 variable "domain" {
   description = "domain name from route53 hosted zone"
   type        = string
-  default     = "r0land.link."
 }
 
-variable "subdomain" {
+variable "subdomain_www" {
   description = "subdomain for server/site"
   type = string
+  default = "www"
+
+}
+
+variable "subdomain_blog" {
+  description = "subdomain for server/site"
+  type = string
+  default = "blog"
+
+}
+
+variable "subdomain_dev" {
+  description = "subdomain for server/site"
+  type = string
+  default = "dev"
 
 }
 
 variable "ami" {
   description = "Amazon Machine Image"
   type        = string
-  default     = "ami-052efd3df9dad4825"
-
 }
 
 variable "instance_type" {
@@ -65,13 +77,13 @@ variable "key_name" {
 variable "sg_name" {
   description = "Name of security group"
   type        = string
-  default     = "dev_sg"
+  default     = "web_sg"
 }
 
 
 variable "sg_description" {
   description = "Description of security group"
   type        = string
-  default     = "SSH & HTTP/HTTPS"
+  default     = "Web & SSH access"
 }
 

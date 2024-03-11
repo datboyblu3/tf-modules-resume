@@ -1,7 +1,12 @@
 #creates ssh key pair for ec2 access via ssh w/ local ssh key
-resource "aws_key_pair" "r0land_ssh_key" {
+resource "aws_key_pair" "ssh_key" {
   key_name   = var.key_name
-  public_key = file("~/.ssh/dev.pub")
+  public_key = tls_private_key.ssh-ed25519.public_key_openssh
+
+}
+
+resource "tls_private_key" "ssh-ed25519" {
+  algorithm = "ED25519"
 }
 
 data "aws_route53_zone" "selected" {
@@ -15,28 +20,42 @@ resource "aws_route53_record" "blog" {
   name    = "blog.${data.aws_route53_zone.selected.name}"
   type    = "A"
   ttl     = "300"
-  records = [aws_eip.r0land_eip.public_ip]
+  records = [aws_eip.elastic_ip.public_ip]
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "www.${data.aws_route53_zone.selected.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_eip.elastic_ip.public_ip]
+}
+resource "aws_route53_record" "dev" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "dev.${data.aws_route53_zone.selected.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_eip.elastic_ip.public_ip]
+}
 
 #reserves a AWS Elastic IP
-resource "aws_eip" "r0land_eip" {
+resource "aws_eip" "elastic_ip" {
   vpc = true
 }
 
 #Associates Elastic IP to ec2 instance
-resource "aws_eip_association" "r0land_eip_assoc" {
-  instance_id   = aws_instance.r0land_instance.id
-  allocation_id = aws_eip.r0land_eip.allocation_id
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.web_instance.id
+  allocation_id = aws_eip.web_eip.allocation_id
 }
 
 #creates ec2 instance
-resource "aws_instance" "r0land_instance" {
+resource "aws_instance" "web_instance" {
   ami                         = var.ami
   instance_type               = var.instance_type
   associate_public_ip_address = var.associate_public_ip_address
   key_name                    = var.key_name
-  vpc_security_group_ids      = [aws_security_group.r0land_sg.id]
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   user_data                   = file("${path.module}/install.sh")
   root_block_device {
     volume_size           = var.volume_size
@@ -48,7 +67,7 @@ resource "aws_instance" "r0land_instance" {
 }
 
 #create security group for ssh,http,https access
-resource "aws_security_group" "r0land_sg" {
+resource "aws_security_group" "web_sg" {
   name        = var.sg_name
   description = var.sg_description
   tags        = var.resource_tags
@@ -72,7 +91,7 @@ data "external" "whatismyip" {
 #security group rules seperated out to allow for modifications
 resource "aws_security_group_rule" "allow_ssh_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.r0land_sg.id
+  security_group_id = aws_security_group.web_sg.id
   description       = var.sg_description
   from_port         = local.ssh_port
   to_port           = local.ssh_port
@@ -82,7 +101,7 @@ resource "aws_security_group_rule" "allow_ssh_inbound" {
 
 resource "aws_security_group_rule" "allow_http_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.r0land_sg.id
+  security_group_id = aws_security_group.web_sg.id
   description       = var.sg_description
 
   from_port   = local.http_port
@@ -93,7 +112,7 @@ resource "aws_security_group_rule" "allow_http_inbound" {
 
 resource "aws_security_group_rule" "allow_https_inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.r0land_sg.id
+  security_group_id = aws_security_group.web_sg.id
   description       = var.sg_description
 
   from_port   = local.https_port
@@ -104,7 +123,7 @@ resource "aws_security_group_rule" "allow_https_inbound" {
 
 resource "aws_security_group_rule" "allow_all_outbound" {
   type              = "egress"
-  security_group_id = aws_security_group.r0land_sg.id
+  security_group_id = aws_security_group.web_sg.id
 
   from_port   = local.any_port
   to_port     = local.any_port
