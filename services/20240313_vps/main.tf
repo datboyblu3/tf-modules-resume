@@ -1,15 +1,19 @@
 #creates ssh key pair for ec2 access via ssh w/ local ssh key
 resource "aws_key_pair" "vps_ssh_key" {
   key_name   = var.key_name
-  public_key = file("~/.ssh/vps.pub")
+  public_key = trimspace(tls_private_key.ssh-ed25519.public_key_openssh)
+}
+
+resource "tls_private_key" "ssh-ed25519" {
+  algorithm = "ED25519"
 }
 
 #reserves a AWS Elastic IP
-resource "aws_eip" "vps_eip" {
+resource "aws_eip" "eip" {
 }
 
 #Associates Elastic IP to ec2 instance
-resource "aws_eip_association" "vps_eip_assoc" {
+resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.vps_instance.id
   allocation_id = aws_eip.vps_eip.allocation_id
 }
@@ -25,15 +29,12 @@ data "cloudinit_config" "test" {
           name                = var.username # new username
           shell               = "/bin/bash"
           sudo                = "ALL=(ALL) NOPASSWD:ALL"
-          ssh_authorized_keys = [chomp(file("~/.ssh/vps.pub"))] #ssh-keygen -t ed25519 -C "vps" -N '' -f ~/.ssh/vps
+          ssh_authorized_keys = trimspace(tls_private_key.ssh-ed25519.public_key_openssh) #ssh-keygen -t ed25519 -C "vps" -N '' -f ~/.ssh/vps
         }
       ]
     })
   }
 }
-
-
-
 
 
 #creates ec2 instance

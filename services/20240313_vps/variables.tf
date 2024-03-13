@@ -2,9 +2,9 @@ variable "resource_tags" {
   description = "Tags to set for all resources"
   type        = map(string)
   default = {
-    project     = "vps server"
-    environment = "dev"
-    Name        = "vps"
+    project     = "research"
+    environment = "vps"
+    Name        = "server"
   }
 }
 
@@ -23,7 +23,7 @@ variable "instance_type" {
 variable "volume_size" {
   description = "Size of Volume"
   type        = string
-  default     = "30"
+  default     = "50"
 
 }
 
@@ -44,20 +44,17 @@ variable "associate_public_ip_address" {
 variable "username" {
   description = "username for vps instance"
   type        = string
-  default     = ""
 }
 
 variable "key_name" {
   description = "Name of the associated ec2 key pair"
   type        = string
-  default     = "vps"
 }
 
 
 variable "sg_name" {
   description = "Name of security group"
   type        = string
-  default     = "vps_sg"
 }
 
 
