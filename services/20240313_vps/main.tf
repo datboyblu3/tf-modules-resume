@@ -15,7 +15,7 @@ resource "aws_eip" "eip" {
 #Associates Elastic IP to ec2 instance
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.vps_instance.id
-  allocation_id = aws_eip.vps_eip.allocation_id
+  allocation_id = aws_eip.eip.allocation_id
 }
 
 data "cloudinit_config" "test" {
