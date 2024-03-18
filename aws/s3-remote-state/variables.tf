@@ -22,27 +22,15 @@ variable "app" {
   }
 }
 
-variable "region" {
-  description = "AWS REGION"
+variable "versioning" {
+  description = "enable bucket versioning"
   type        = string
-  default     = "us-east-1"
+  default     = "Enabled"
+  validation {
+    condition = anytrue([
+      var.versioning == "Enabled",
+      var.versioning == "Disabled"
+    ])
+    error_message = "Please specify Enabled or Disabled"
+  }
 }
-
-variable "bucket" {
-  description = "bucket name"
-  type        = string
-  default     = ""
-}
-
-variable "dynamodb_table_name" {
-  description = "Name of the dynamodb table"
-  type        = string
-  default     = "tf-locks"
-}
-
-variable "user" {
-  description = "IAM user name for remote state module"
-  type        = string
-  default     = ""
-}
-
