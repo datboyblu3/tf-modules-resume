@@ -1,30 +1,46 @@
-variable "resource_tags" {
-  description = "Tags to set for all resources"
-  type        = map
-  default = {
-    project     = "Blog"
-    environment = "dev"
-    Name        = "server"
+# variable "resource_tags" {
+#   description = "Tags to set for all resources"
+#   type        = map(any)
+#   default = {
+#     project     = "Blog"
+#     environment = "dev"
+#     Name        = "server"
+#   }
+# }
+
+variable "env" {
+  description = "code/app environement"
+  type        = string
+  validation {
+    condition = anytrue([
+      var.env == "dev",
+      var.env == "stage",
+      var.env == "prod",
+      var.env == "testing"
+    ])
+    error_message = "Please use one of the approved environement names: dev, stage, prod, testing"
   }
 }
 
+variable "app" {
+  description = "app or project name"
+  type        = string
+  default     = ""
+  validation {
+    condition     = length(var.app) > 4
+    error_message = "app name must be at least 4 characters"
+  }
+}
+
+variable "username" {
+  description = "username of the ec2 instance"
+  type        = string
+}
+
 variable "domain" {
-  description = "domain name from route53 hosted zone"
+  description = "domain name from cloudflare hosted zone"
   type        = string
-  default     = "r0land.link."
-}
-
-variable "subdomain" {
-  description = "subdomain for server/site"
-  type = string
-
-}
-
-variable "ami" {
-  description = "Amazon Machine Image"
-  type        = string
-  default     = "ami-052efd3df9dad4825"
-
+  default     = ""
 }
 
 variable "instance_type" {
@@ -46,32 +62,3 @@ variable "volume_type" {
   default     = "gp3"
 
 }
-
-variable "associate_public_ip_address" {
-  description = "Whether to associate public IP to EC2 Instance"
-  type        = bool
-  default     = true
-}
-
-
-
-variable "key_name" {
-  description = "Name of the associated ec2 key pair"
-  type        = string
-  default     = "dev-ssh"
-}
-
-
-variable "sg_name" {
-  description = "Name of security group"
-  type        = string
-  default     = "dev_sg"
-}
-
-
-variable "sg_description" {
-  description = "Description of security group"
-  type        = string
-  default     = "SSH & HTTP/HTTPS"
-}
-

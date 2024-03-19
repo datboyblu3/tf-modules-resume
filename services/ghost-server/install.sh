@@ -13,17 +13,11 @@ docker-compose --version
 curl -fsSL https://get.docker.com/ -o get-docker.sh
 sh get-docker.sh
 
-curl -s https://api.github.com/repos/bcicen/ctop/releases/latest | grep browser_download_url | grep linux-amd64 | cut -d '"' -f 4 | wget -i -
-
-chmod +x ctop-*-linux-amd64
-
-mv ctop-*-linux-amd64 /usr/local/bin/ctop
-
 systemctl stop nginx
 
 systemctl disable nginx
 
-certbot certonly --non-interactive --agree-tos -m fonalex45@gmail.com --standalone -d blog.r0land.link
+certbot certonly --non-interactive --agree-tos -m fonalex45@gmail.com --standalone -d fr3d.cloud
 
 mkdir -p /opt/ghost_content
 mkdir -p /opt/ghost_mysql
@@ -37,6 +31,6 @@ chmod 777 /opt/ghost_compose
 
 touch /opt/ghost_nginx/default.conf
 
-usermod -aG docker admin
+usermod -aG docker fr3d
 
 reboot
