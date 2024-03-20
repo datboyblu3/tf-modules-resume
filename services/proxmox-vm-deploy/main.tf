@@ -21,7 +21,6 @@ resource "tls_private_key" "ssh-ed25519" {
 }
 
 resource "proxmox_vm_qemu" "virtual_machine" {
-  #count       = var.vm_count
   for_each    = var.vm_configs
   target_node = each.value.node
   desc        = var.description
@@ -61,7 +60,6 @@ resource "proxmox_vm_qemu" "virtual_machine" {
 
   # Setup the ip address using cloud-init.
   # Keep in mind to use the CIDR notation for the ip.
-  #ipconfig0               = "ip=${var.cidr}.${var.octet}${count.index + 1}/24,gw=${var.cidr}.1"
   ipconfig0               = "ip=${each.value.ip}/24,gw=${each.value.gw}"
   ciuser                  = var.ciuser
   cipassword              = var.cipassword
