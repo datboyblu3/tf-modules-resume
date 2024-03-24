@@ -1,6 +1,6 @@
 #! /bin/bash
 
-sudo -u fr3d -i <<'EOF'
+sudo -u fr3d -i <<'EOF
 
 sudo apt-get update && sudo apt-get install -y tmux zsh jq wget curl lolcat figlet unzip
 
