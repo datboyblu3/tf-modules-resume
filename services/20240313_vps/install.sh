@@ -1,6 +1,6 @@
 #! /bin/bash
 
-sudo su -l fr3d -c '
+sudo -u fr3d -i <<'EOF'
 
 sudo apt-get update && sudo apt-get install -y tmux zsh jq wget curl lolcat figlet unzip
 
@@ -34,8 +34,9 @@ echo "source $HOME/.zsh/aegis" >> /home/fr3d/.zshrc
 chmod +x /home/fr3d/.zsh/aegis
 
 echo "alias t="tmux new -f ~/.tmux.conf -s $1"" >> /home/fr3d/.zshrc
+
 echo "alias c="clear"" >> /home/fr3d/.zshrc
 
 sudo chsh fr3d -s /usr/bin/zsh
 
-'
+EOF
