@@ -1,5 +1,7 @@
 #! /bin/bash
 
+sudo su -l fr3d -c '
+
 sudo apt-get update && sudo apt-get install -y tmux zsh jq wget curl lolcat figlet unzip
 
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -27,11 +29,13 @@ wget -q "https://raw.githubusercontent.com/alexrf45/aegis/main/bash/aegis" -O .z
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-echo "source $HOME/.zsh/aegis" >>.zshrc
+echo "source $HOME/.zsh/aegis" >> /home/fr3d/.zshrc
 
-chmod +x .zsh/aegis
+chmod +x /home/fr3d/.zsh/aegis
 
-echo "alias t='tmux new -f ~/.tmux.conf -s $1'" >>.zshrc
-echo "alias c='clear'" >>.zshrc
+echo "alias t="tmux new -f ~/.tmux.conf -s $1"" >> /home/fr3d/.zshrc
+echo "alias c="clear"" >> /home/fr3d/.zshrc
 
-sudo chsh $USER -s /usr/bin/zsh
+sudo chsh fr3d -s /usr/bin/zsh
+
+'
