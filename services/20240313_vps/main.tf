@@ -34,6 +34,12 @@ data "cloudinit_config" "test" {
       ]
     })
   }
+
+  part { #useful for bootstrapping the instance
+    filename     = "./install.sh"
+    content_type = "text/x-shellscript"
+    content      = file("./install.sh")
+  }
 }
 
 
